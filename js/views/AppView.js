@@ -28,11 +28,25 @@ app.AppView = Backbone.View.extend({
 		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip","rose","dandelion"], data: data});
 		tableCollection.add(flowerModel);
 
+		var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData()});
+		var timechart = d3.select("body").append("div").attr("class","timechart");
+
+		this.centerView = new app.TimeChartView({model: timelineModel, el : timechart});
 		this.rightView = new app.TableView({model: flowerModel});
 	},
 
 	render: function(){
 		this.$el.append(this.rightView.render().$el);
+		this.centerView.render();
+		$(this.centerView.$el).droppable({
+			accept: ".draggable-item",
+			drop: function(event,ui){
+				console.log("UI");
+				console.log(ui);
+
+			}
+
+		});
 		return this;
 	}
 

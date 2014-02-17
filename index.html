@@ -4,14 +4,14 @@
     <script id="data-table" type="text/x-handlebars-template">
         <div class="data-cell">
             <ul>
-                <div class="data-type">
+                <div class="data-type draggable-item ui-widget-content">
                     <input type="checkbox" class="show-data-type"/>
                     {{this.title}}
                 </div>
                     <ul class="datum-list" data-collapsed-state="uncollapsed">
                         {{#each this.values}}
                             <li> 
-                                <div class="datum">
+                                <div class="datum draggable-item ui-widget-content">
                                     <input type="checkbox" data-title={{ this }} class="show-datum"/>
                                      <div class="datum-title">   {{ this }} </div>
                                 </div>
@@ -24,16 +24,24 @@
         <meta charset="UTF-8"/>
         <title>Flowers Data Viz</title>
         <script src="js/lib/jquery-min.js"></script>
+        <script src="js/lib/jquery-ui/js/jquery-ui-1.10.4.custom.min.js"></script>
+        <script src="js/lib/jquery.svg.min.js"></script>
         <script src="js/lib/underscore-min.js"></script>
         <script src="js/lib/backbone-min.js"></script>
         <script src="js/lib/handlebars-v1.3.0.js"></script>
+        <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/models/DataModel.js"></script>
         <script src="js/models/TableCollection.js"></script>
+        <script src="js/models/TimeChartModel.js"></script>
+        <script src="js/views/TimeChartView.js"></script>
         <script src="js/views/AppView.js"></script>
         <script src="js/views/TableView.js"></script>
-        <link rel="stylesheet" type="text/css" href="css/dashboard.css"></script>
+        <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+        <link rel="stylesheet" type="text/css" href="js/lib/css/smoothness/jquery-ui.1.10.4.css"/>
+    </script>
     </head>
     <body>
+
 
 
 

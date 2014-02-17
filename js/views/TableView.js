@@ -43,7 +43,15 @@ app.TableView = Backbone.View.extend({
 		$(this.el).html(this.template({
 			title: modelJson.title,
 			values: modelJson.values
-		}))
+		}));
+
+		var draggableItems = $(this.$el).find(".draggable-item");
+		d3.selectAll(draggableItems).data(modelJson);
+		
+		$(draggableItems).draggable({
+			cursor: "move",
+			helper: "clone"
+		});
 		return this;
 
 	}
