@@ -1,4 +1,4 @@
-    var app = app || app {};
+    var app = app || {};
     
 
     app.DataModel = Backbone.Model.extend({
@@ -6,26 +6,23 @@
             title: '',
             values: [],
     		data: {},
-    		dataToShow: [],// can check 'tulip' for example to show all rows dealing with tulips
-    		displayedData: [],
+    		dataToShow: [],// can check 'tulip' and 'rose' for example to show all rows dealing with tulips
+    		displayedData: []
+        },
             
 
     	initialize: function(){
-    		dataToShow = this.dataToShowFunc(this.data);//data to show func should give back the titles to show
+            return this;
         },
 
-    	addDataToShow: function(dataName){
-            dataToShow = _.uniq(dataToShow.push(dataName));
-    	},
-
-        getData: function(){
-            //go through the dataToShow and for each title pull out the row?
-            //do I need an accessor method to tell my model how to get the data out? 
-            data = this.data;
-            displayedData = this.displayedData;
-            title = this.title;
+        getDisplayedData: function(){
+            var data = this.get('data')
+            var displayedData = this.get('displayedData')
+            var title = this.get('title')
+            var newData = [];
+            var dataToShow = this.get('dataToShow');
             _.each(dataToShow, function(value,key,list){
-                nData = this.data.length;
+                nData = data.length;
                 for(i = 0; i < nData ; i++){
                     row = data[i];
                     if(row[title] == value){
@@ -33,8 +30,8 @@
                     }
                 }
             });
-            this.displayedData = newData;
-            return this.displayedData;
+
+            return newData;
         }
 
     });

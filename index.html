@@ -1,34 +1,41 @@
 <!DOCTYPE html>
 <html lang="en">
     <head>
-        <meta charset="UTF-8"/>
-        <title>Flowers Data Viz</title>
-        <link rel="stylesheet" href="css/screen.css">
-                <script src="js/lib/jquery-min.js"></script>
-        <script src="js/lib/underscore-min.js"></script>
-        <script src="js/lib/backbone-min.js"></script>
-        <script src="js/lib/handlebars-v1.3.0.js"></script>
-        <script src="js/app.js"></script>
-    </head>
-    <body>
-
-    <script id="table" type="text/x-handlebars-template">
+    <script id="data-table" type="text/x-handlebars-template">
         <div class="data-cell">
             <ul>
-                {{#each dataModel}}
-                    <li>{{this.name}}</li>
-                    <ul>
-                        {{#each dataToShow}}
-                        <li> 
-                            <input type="checkbox" class="show-datum"/>
-                        </li>
+                <div class="data-type">
+                    <input type="checkbox" class="show-data-type"/>
+                    {{this.title}}
+                </div>
+                    <ul class="datum-list" data-collapsed-state="uncollapsed">
+                        {{#each this.values}}
+                            <li> 
+                                <div class="datum">
+                                    <input type="checkbox" data-title={{ this }} class="show-datum"/>
+                                     <div class="datum-title">   {{ this }} </div>
+                                </div>
+                            </li>
                         {{/each}}
                     </ul>
-
-                {{/each}}
             </ul>
         </div>
     </script>
+        <meta charset="UTF-8"/>
+        <title>Flowers Data Viz</title>
+        <script src="js/lib/jquery-min.js"></script>
+        <script src="js/lib/underscore-min.js"></script>
+        <script src="js/lib/backbone-min.js"></script>
+        <script src="js/lib/handlebars-v1.3.0.js"></script>
+        <script src="js/models/DataModel.js"></script>
+        <script src="js/models/TableCollection.js"></script>
+        <script src="js/views/AppView.js"></script>
+        <script src="js/views/TableView.js"></script>
+        <link rel="stylesheet" type="text/css" href="css/dashboard.css"></script>
+    </head>
+    <body>
+
+
 
 
 
