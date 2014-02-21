@@ -83,10 +83,9 @@ app.TimeChartView = Backbone.View.extend({
 			});
 
 			var line = d3.svg.line()
-			.interpolate("basis")
+			.interpolate("linear")
 			.x(function(d) { 
 				var date = d["date"].match(/(\d+)/g);
-
 				date = new Date(date[2], date[0], date[1]);
 				return xScale(date)})
 			.y(function(d) { 
@@ -99,7 +98,8 @@ app.TimeChartView = Backbone.View.extend({
 				.style("stroke", function(d,i) { return color(i); })
 				.attr("fill","none");
 
-						var totalLength = path.node().getTotalLength();
+			
+			var totalLength = path.node().getTotalLength();
 
 
 		 	path
@@ -109,6 +109,22 @@ app.TimeChartView = Backbone.View.extend({
 		        .duration(2000)
 		        .ease("linear")
 		        .attr("stroke-dashoffset", 0);
+
+		    svg.selectAll('.point')
+		    	.data(newData)
+		    	.enter()
+		    	.append("svg:circle")
+		    	.attr("cx", function(d,i){ 
+		    		var date = d["date"].match(/(\d+)/g);
+					date = new Date(date[2], date[0], date[1]);
+					return xScale(date);
+		    	})
+		    	.attr("cy", function(d,i){
+		    		var quantitySold = yScale(d["quantity-sold"]);
+		    		return quantitySold;
+		    	})
+		    	.attr("fill", "red")
+		    	.attr("r", 2);
 
         });
 
