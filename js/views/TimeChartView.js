@@ -6,21 +6,23 @@ app.TimeChartView = Backbone.View.extend({
 	className: 'timechart-container',
 
 	initialize: function(){
-		console.log("INIT");
 		this.model.bind('change:data','render');
-		var margin = {top: 20, right: 80, bottom: 30, left: 50};
-    	var width = 600 - margin.left - margin.right;
-    	var height = 500 - margin.top - margin.bottom;
-    	var color = d3.scale.category10();
-    	var svg = d3.select(".timechart").append("svg")
-    		.attr("width", width + margin.left + margin.right)
-			.attr("height", height + margin.top + margin.bottom)
+		this.margin = {top: 20, right: 80, bottom: 30, left: 50};
+    	this.width = 600 - this.margin.left - this.margin.right;
+    	this.height = 500 - this.margin.top - this.margin.bottom;
+    	this.svg = d3.select(".timechart").append("svg")
+    		.attr("width", this.width + this.margin.left + this.margin.right)
+			.attr("height", this.height + this.margin.top + this.margin.bottom)
 			.append("g")
-			.attr("transform", "translate(" + margin.left + "," + margin.top + ")");
-		//need to get the bottom axis?
-		//so get the dates?
-		//need a date accessor method
-		var data = this.model.get('data');
+			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+		return this;
+
+
+	},
+
+	render: function(){
+	var data = this.model.get('data');
+	var titlesToShow = this.model.get('titlesToShow');
 
 		data.sort(function(d1, d2){
 		  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
@@ -36,7 +38,7 @@ app.TimeChartView = Backbone.View.extend({
 		maxDate = new Date(maxDate[2],maxDate[0], maxDate[1]);
 		var maxVal = data[data.length - 1];
 
-		var xScale = d3.time.scale().domain([minDate, maxDate]).range([0,width]);
+		var xScale = d3.time.scale().domain([minDate, maxDate]).range([0,this.width]);
 
 		dataSortedByQuantitySold = data.sort(function(d1,d2){
 			return d1["quantity-sold"] - d2["quantity-sold"];
@@ -44,24 +46,45 @@ app.TimeChartView = Backbone.View.extend({
 
 		minVal = dataSortedByQuantitySold[0];
 		maxVal = dataSortedByQuantitySold[dataSortedByQuantitySold.length - 1];
-		var yScale = d3.scale.linear().domain([maxVal["quantity-sold"], minVal["quantity-sold"]]).range([0,height]);
+		var yScale = d3.scale.linear().domain([maxVal["quantity-sold"], minVal["quantity-sold"]]).range([0,this.height]);
 
 		var xAxis = d3.svg.axis()
 			.scale(xScale)
 			.orient("bottom")
 			.ticks(5); //need a way to find this
 
-
-		svg.append("g")
-			.attr("transform", "translate(0," + height + ")")
+		this.svg.append("g")
+			.attr("transform", "translate(0," + this.height + ")")
 			.call(xAxis);
 
 		var yAxis = d3.svg.axis().scale(yScale).orient("right");
-		svg.append("g").call(yAxis);
-		var line = d3.svg.line()
+		this.svg.append("g").call(yAxis);
+		
+
+    	var color = d3.scale.category10();
+    	var svg = this.svg;
+        _.each(titlesToShow, function(value,key,list){
+
+            var nData = data.length;
+            var newData = [];
+
+            for(i = 0; i < nData ; i++){
+                row = data[i];
+                if(row["flower"] === value){
+                    newData.push(row);
+                }
+            }
+
+
+        
+	        newData.sort(function(d1, d2){
+			  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
+			  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
+			});
+
+			var line = d3.svg.line()
 			.interpolate("basis")
 			.x(function(d) { 
-				console.log(d);
 				var date = d["date"].match(/(\d+)/g);
 
 				date = new Date(date[2], date[0], date[1]);
@@ -69,37 +92,30 @@ app.TimeChartView = Backbone.View.extend({
 			.y(function(d) { 
 				var quantitySold = yScale(d["quantity-sold"]);
 				return quantitySold});
-		console.log(data);
-		data.sort(function(d1, d2){
-		  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
-		  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
-		});
+
+
+			var path = svg.append("path")
+				.attr("d", line(newData))
+				.style("stroke", function(d,i) { return color(i); })
+				.attr("fill","none");
+
+						var totalLength = path.node().getTotalLength();
+
+
+		 	path
+		      .attr("stroke-dasharray", totalLength + " " + totalLength)
+		      .attr("stroke-dashoffset", totalLength)
+		      .transition()
+		        .duration(2000)
+		        .ease("linear")
+		        .attr("stroke-dashoffset", 0);
+
+        });
 
 
 
-		var path = svg.append("path")
-			.attr("d", line(data))
-			.style("stroke", function(d,i) { return color(i); })
-			.attr("fill","none");
-
-					var totalLength = path.node().getTotalLength();
 
 
-	 	path
-	      .attr("stroke-dasharray", totalLength + " " + totalLength)
-	      .attr("stroke-dashoffset", totalLength)
-	      .transition()
-	        .duration(2000)
-	        .ease("linear")
-	        .attr("stroke-dashoffset", 0);
-
-
-		return this;
-
-
-	},
-
-	render: function(){
 
 		return this;
 

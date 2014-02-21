@@ -25,10 +25,10 @@ app.AppView = Backbone.View.extend({
 		var dataLen = data.length;
 		var tableCollection = new app.TableCollection();
 
-		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip"], data: data});
+		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
 		tableCollection.add(flowerModel);
 
-		var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData()});
+		var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData(), titlesToShow: flowerModel.get('dataToShow')});
 		var timechart = d3.select("body").append("div").attr("class","timechart");
 
 		this.centerView = new app.TimeChartView({model: timelineModel, el : timechart});
