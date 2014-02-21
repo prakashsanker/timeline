@@ -25,7 +25,7 @@ app.AppView = Backbone.View.extend({
 		var dataLen = data.length;
 		var tableCollection = new app.TableCollection();
 
-		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["rose"], data: data});
+		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip"], data: data});
 		tableCollection.add(flowerModel);
 
 		var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData()});
