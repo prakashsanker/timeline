@@ -25,7 +25,7 @@ app.AppView = Backbone.View.extend({
 		var dataLen = data.length;
 		var tableCollection = new app.TableCollection();
 
-		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip","rose","dandelion"], data: data});
+		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["rose"], data: data});
 		tableCollection.add(flowerModel);
 
 		var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData()});
@@ -38,15 +38,6 @@ app.AppView = Backbone.View.extend({
 	render: function(){
 		this.$el.append(this.rightView.render().$el);
 		this.centerView.render();
-		$(this.centerView.$el).droppable({
-			accept: ".draggable-item",
-			drop: function(event,ui){
-				console.log("UI");
-				console.log(ui);
-
-			}
-
-		});
 		return this;
 	}
 
