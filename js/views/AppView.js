@@ -23,27 +23,42 @@ app.AppView = Backbone.View.extend({
 						{"flower": "dandelion", "date": "2/7/2012", "quantity-sold": "7", "quantity-unsold": "8"}
 					];
 		var dataLen = data.length;
+
+
+
+
 		var tableCollection = new app.TableCollection();
 		//DataModel is REALLY a model for filtering data...or for exact matching of filtering data. It picks out rose, tulip and dandelion...
 		//I think the dataToShow method that is passed in should be a filter method. 
-		var flowerModel = new app.FilterModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
 		
-		//the next model I need I guess is one for picking which lines? 
-		var yModel = new app.YModel({title: 'Line Charts', values: ["quantity-sold", "quantity-unsold"]});
+
+		var datumChoicesCollection = new app.DatumChoicesCollection();
+		var lineChoicesCollection = new app.LineChoicesCollection();
+
+		var lineChoiceModel = new app.LineChoiceModel({title: "Line Charts", linesToShow: ["quantity-sold", "quantity-unsold"]});
+		var flowerModel = new app.FilterModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
+
+		var chooserModel = new app.ChooserModel({lineChoicesCollection: [], datumChoicesCollection: []});
+
+		var chooserView = new app.ChooserView({model: chooserModel});
+
+		lineChoicesCollection.add(lineChoiceModel);
+		datumChoicesCollection.add(flowerModel);
+
+		chooserModel.set('lineChoicesCollection', lineChoicesCollection);
+		chooserModel.set('datumChoicesCollection', datumChoicesCollection);
 
 		// var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData(), titlesToShow: flowerModel.get('dataToShow')});
-		this.rightView = new app.ValuesTableView({model: flowerModel});
-		tableCollection.add(flowerModel);
-		tableCollection.add(yModel);
+		this.rightView = chooserView;
 
 		var timechart = d3.select("body").append("div").attr("class","timechart");
 
-		this.centerView = new app.TimeChartView({model: flowerModel, el : timechart});
+		// this.centerView = new app.TimeChartView({model: flowerModel, el : timechart});
 	},
 
 	render: function(){
 		this.$el.append(this.rightView.render().$el);
-		this.centerView.render();
+		// this.centerView.render();
 		return this;
 	}
 

@@ -24,15 +24,11 @@ app.ValuesTableView = Backbone.View.extend({
 
 	addDatumToShow: function(e){
 		var test = $(this.$el).find(".datum-list").find(":checked");
-		console.log("test");
-		console.log(test);
-		newDataToShow = [];
+		var newDataToShow = [];
 		_.each(test, function(value,key,list){
 			var title = $(value).data("title");
 			newDataToShow.push(title);
 		});
-		console.log(this);
-		console.log(this.model);
 		this.model.setDataToShow(newDataToShow);
 	},
 
@@ -44,7 +40,7 @@ app.ValuesTableView = Backbone.View.extend({
 
 	render: function(){
 		modelJson = this.model.toJSON();
-		$(this.el).html(this.template({
+		$(this.$el).html(this.template({
 			title: modelJson.title,
 			values: modelJson.values
 		}));

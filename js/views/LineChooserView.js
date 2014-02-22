@@ -5,14 +5,30 @@ app.LineChooserView = Backbone.View.extend({
 	className: 'line-chooser',
 	template: Handlebars.compile($("#line-chooser").html()),
 
+	events: {
+		'click .show-line-choice': 'addLineToChart'
+	},
+
+	addLineToChart: function(e){
+		var linesToAdd = $(this.$el).find('.show-line-choice:checked');
+		var linesToShow = [];
+		_.each(linesToAdd, function(value, key, list){
+			linesToShow.push($(value).data('line-title'));
+		});
+		this.model.set('linesToShow', linesToShow);
+	},
+
 	initialize: function(){
 
 		return this.$el;
 	},
 
 	render: function(){
-
-		return this.$el;
+		modelJson = this.model.toJSON();
+		$(this.$el).html(this.template({
+			linesToShow: modelJson.linesToShow
+		}));
+		return this;
 	}
 
 

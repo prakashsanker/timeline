@@ -32,10 +32,10 @@
             {{this.title}}
         </div>
             <ul class="line-choice-list" data-collapsed-state="uncollapsed">
-                {{#each this.keysToShow}}
+                {{#each this.linesToShow}}
                     <li>
                         <div class="line-choice">
-                            <input type="checkbox" data-title={{ this }} class="show-line-choice"/>
+                            <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
                             <div class="line-title"> {{ this }}</div>
                         </div>
                     </li>
@@ -53,13 +53,20 @@
         <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
         <script src="js/lib/d3tip.js"></script>
         <script src="js/models/DataModel.js"></script>
-        <script src="js/models/YModel.js"></script>
+        <script src= "js/models/LineChoiceModel.js"></script>
         <script src="js/models/FilterModel.js"></script>
+        <script src="js/models/DatumChoicesCollection.js"></script>
+        <script src="js/models/LineChoicesCollection.js"></script>
+        <script src="js/models/ChooserModel.js"></script>
         <script src="js/models/TableCollection.js"></script>
         <script src="js/models/TimeChartModel.js"></script>
+        <script src="js/views/LineChooserView.js"></script>
+        <script src="js/views/ChooserView.js"></script>
         <script src="js/views/TimeChartView.js"></script>
         <script src="js/views/AppView.js"></script>
         <script src="js/views/ValuesTableView.js"></script>
+
+
 
         <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
         <link rel="stylesheet" type="text/css" href="js/lib/css/smoothness/jquery-ui.1.10.4.css"/>
