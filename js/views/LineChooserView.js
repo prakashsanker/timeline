@@ -19,7 +19,6 @@ app.LineChooserView = Backbone.View.extend({
 	},
 
 	initialize: function(){
-
 		return this.$el;
 	},
 

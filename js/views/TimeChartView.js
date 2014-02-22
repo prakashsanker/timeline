@@ -66,86 +66,92 @@ app.TimeChartView = Backbone.View.extend({
 
     	var color = d3.scale.category10();
     	var svg = this.svg;
-        _.each(titlesToShow, function(value,key,list){
 
-            var nData = data.length;
-            var newData = [];
+    	
 
-            for(i = 0; i < nData ; i++){
-                row = data[i];
-                if(row["flower"] === value){
-                    newData.push(row);
-                }
-            }
+
+
+
+        // _.each(titlesToShow, function(value,key,list){
+
+        //     var nData = data.length;
+        //     var newData = [];
+
+        //     for(i = 0; i < nData ; i++){
+        //         row = data[i];
+        //         if(row["flower"] === value){
+        //             newData.push(row);
+        //         }
+        //     }
 
 
         
-	        newData.sort(function(d1, d2){
-			  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
-			  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
-			});
+	  //       newData.sort(function(d1, d2){
+			//   var d1 = d1.date.split('/'), d2 = d2.date.split('/');
+			//   return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
+			// });
 
-			var line = d3.svg.line()
-			.interpolate("linear")
-			.x(function(d) { 
-				var date = d["date"].match(/(\d+)/g);
-				date = new Date(date[2], date[0], date[1]);
-				return xScale(date)})
-			.y(function(d) { 
-				var quantitySold = yScale(d["quantity-sold"]);
-				return quantitySold});
+			// var line = d3.svg.line()
+			// .interpolate("linear")
+			// .x(function(d) { 
+			// 	var date = d["date"].match(/(\d+)/g);
+			// 	date = new Date(date[2], date[0], date[1]);
+			// 	return xScale(date)})
+			// .y(function(d) { 
+			// 	var quantitySold = yScale(d["quantity-sold"]);
+			// 	return quantitySold});
 
 
-			var path = svg.append("path")
-				.attr("d", line(newData))
-				.style("stroke", function(d,i) { return color(i); })
-				.attr("fill","none");
+			// var path = svg.append("path")
+			// 	.attr("d", line(newData))
+			// 	.style("stroke", function(d,i) { return color(i); })
+			// 	.attr("fill","none");
 
 			
-			var totalLength = path.node().getTotalLength();
+			// var totalLength = path.node().getTotalLength();
 
-			var tooltip = d3.tip()
-				.attr("class", "tooltip")
-				.offset([0,5])
-				.html(function(d){
-					console.log(d);
-					return "<strong> 20 </strong>";
-				});
+			// var tooltip = d3.tip()
+			// 	.attr("class", "tooltip")
+			// 	.offset([0,5])
+			// 	.html(function(d){
+			// 		console.log(d);
+			// 		return "<strong> 20 </strong>";
+			// 	});
 
-			svg.call(tooltip);
-
-
+			// svg.call(tooltip);
 
 
-		 	path
-		      .attr("stroke-dasharray", totalLength + " " + totalLength)
-		      .attr("stroke-dashoffset", totalLength)
-		      .transition()
-		        .duration(2000)
-		        .ease("linear")
-		        .attr("stroke-dashoffset", 0);
 
-		    svg.selectAll('.point')
-		    	.data(newData)
-		    	.enter()
-		    	.append("svg:circle")
-		    	.attr("cx", function(d,i){ 
-		    		var date = d["date"].match(/(\d+)/g);
-					date = new Date(date[2], date[0], date[1]);
-					return xScale(date);
-		    	})
-		    	.attr("cy", function(d,i){
-		    		var quantitySold = yScale(d["quantity-sold"]);
-		    		return quantitySold;
-		    	})
-		    	.attr("fill", "red")
-		    	.attr("r", 4)
-		    	.on("mouseover", function(d){
-		    		tooltip.show();
-		    	})
-		    	.on("mouseout", function(d){
-		    		tooltip.hide();
-		    	});
+
+		 	// path
+		  //     .attr("stroke-dasharray", totalLength + " " + totalLength)
+		  //     .attr("stroke-dashoffset", totalLength)
+		  //     .transition()
+		  //       .duration(2000)
+		  //       .ease("linear")
+		  //       .attr("stroke-dashoffset", 0);
+
+		  //   svg.selectAll('.point')
+		  //   	.data(newData)
+		  //   	.enter()
+		  //   	.append("svg:circle")
+		  //   	.attr("cx", function(d,i){ 
+		  //   		var date = d["date"].match(/(\d+)/g);
+				// 	date = new Date(date[2], date[0], date[1]);
+				// 	return xScale(date);
+		  //   	})
+		  //   	.attr("cy", function(d,i){
+		  //   		var quantitySold = yScale(d["quantity-sold"]);
+		  //   		return quantitySold;
+		  //   	})
+		  //   	.attr("fill", "red")
+		  //   	.attr("r", 4)
+		  //   	.on("mouseover", function(d){
+		  //   		tooltip.show();
+		  //   	})
+		  //   	.on("mouseout", function(d){
+		  //   		tooltip.hide();
+		  //   	});
 
 
 
