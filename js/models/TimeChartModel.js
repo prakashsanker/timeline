@@ -3,7 +3,8 @@ var app = app || {};
 app.TimeChartModel = Backbone.Model.extend({
 	defaults:{
 		data: [],
-		titlesToShow: []
+		titlesToShow: [],
+		tableModel: {}
 	},
 
 	initialize: function(){

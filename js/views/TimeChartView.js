@@ -6,15 +6,11 @@ app.TimeChartView = Backbone.View.extend({
 	className: 'timechart-container',
 
 	initialize: function(){
-		this.model.bind('change:data','render');
+		this.model.bind('change',this.render, this);
 		this.margin = {top: 20, right: 80, bottom: 30, left: 50};
     	this.width = 600 - this.margin.left - this.margin.right;
     	this.height = 500 - this.margin.top - this.margin.bottom;
-    	this.svg = d3.select(".timechart").append("svg")
-    		.attr("width", this.width + this.margin.left + this.margin.right)
-			.attr("height", this.height + this.margin.top + this.margin.bottom)
-			.append("g")
-			.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
+
 		return this;
 
 
@@ -22,8 +18,15 @@ app.TimeChartView = Backbone.View.extend({
 
 	render: function(){
 	var data = this.model.get('data');
-	var titlesToShow = this.model.get('titlesToShow');
-
+	var titlesToShow = this.model.get('dataToShow');
+	console.log("render called");
+	console.log(titlesToShow);
+	d3.select(".timechart").select("svg").remove();
+	this.svg = d3.select(".timechart").append("svg")
+		.attr("width", this.width + this.margin.left + this.margin.right)
+		.attr("height", this.height + this.margin.top + this.margin.bottom)
+		.append("g")
+		.attr("transform", "translate(" + this.margin.left + "," + this.margin.top + ")");
 		data.sort(function(d1, d2){
 		  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
 		  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
@@ -57,8 +60,8 @@ app.TimeChartView = Backbone.View.extend({
 			.attr("transform", "translate(0," + this.height + ")")
 			.call(xAxis);
 
-		var yAxis = d3.svg.axis().scale(yScale).orient("right");
-		this.svg.append("g").call(yAxis);
+		var yAxis = d3.svg.axis().scale(yScale).orient("right").ticks(7);
+		this.svg.append("g").call(yAxis); //need to find this
 		
 
     	var color = d3.scale.category10();
@@ -101,6 +104,18 @@ app.TimeChartView = Backbone.View.extend({
 			
 			var totalLength = path.node().getTotalLength();
 
+			var tooltip = d3.tip()
+				.attr("class", "tooltip")
+				.offset([0,5])
+				.html(function(d){
+					console.log(d);
+					return "<strong> 20 </strong>";
+				});
+
+			svg.call(tooltip);
+
+
+
 
 		 	path
 		      .attr("stroke-dasharray", totalLength + " " + totalLength)
@@ -124,14 +139,18 @@ app.TimeChartView = Backbone.View.extend({
 		    		return quantitySold;
 		    	})
 		    	.attr("fill", "red")
-		    	.attr("r", 2);
+		    	.attr("r", 4)
+		    	.on("mouseover", function(d){
+		    		tooltip.show();
+		    	})
+		    	.on("mouseout", function(d){
+		    		tooltip.hide();
+		    	});
+
+
+
 
         });
-
-
-
-
-
 
 		return this;
 

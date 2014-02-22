@@ -15,6 +15,11 @@
             return this;
         },
 
+        setDataToShow: function(dataToShow){
+            this.set('dataToShow', dataToShow);
+
+        },
+
         getDisplayedData: function(){
             var data = this.get('data')
             var displayedData = this.get('displayedData')

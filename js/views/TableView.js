@@ -8,7 +8,6 @@ app.TableView = Backbone.View.extend({
 	events: {
 		'click .data-type' : 'collapseDatum',
 		'click .show-datum' : 'addDatumToShow',
-		'click .map-data' : 'mapData'
 	},
 
 	collapseDatum: function(e){
@@ -24,13 +23,17 @@ app.TableView = Backbone.View.extend({
 	},
 
 	addDatumToShow: function(e){
-		var test = $(".datum-list").find(":checked");
+		var test = $(this.$el).find(".datum-list").find(":checked");
+		console.log("test");
+		console.log(test);
 		newDataToShow = [];
 		_.each(test, function(value,key,list){
 			var title = $(value).data("title");
 			newDataToShow.push(title);
 		});
-		this.model.set('dataToShow', newDataToShow);
+		console.log(this);
+		console.log(this.model);
+		this.model.setDataToShow(newDataToShow);
 	},
 
 
@@ -46,13 +49,7 @@ app.TableView = Backbone.View.extend({
 			values: modelJson.values
 		}));
 
-		var draggableItems = $(this.$el).find(".draggable-item");
-		d3.selectAll(draggableItems).data(modelJson);
 
-		$(draggableItems).draggable({
-			cursor: "move",
-			helper: "clone"
-		});
 		return this;
 
 	}
