@@ -1,9 +1,9 @@
 var app = app || {};
 
-app.TableView = Backbone.View.extend({
+app.ValuesTableView = Backbone.View.extend({
 	tagName: 'div',
-	className: 'table-container',
-	template: Handlebars.compile($('#data-table').html()),
+	className: 'value-chooser',
+	template: Handlebars.compile($('#value-chooser').html()),
 
 	events: {
 		'click .data-type' : 'collapseDatum',

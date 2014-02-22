@@ -26,20 +26,19 @@ app.AppView = Backbone.View.extend({
 		var tableCollection = new app.TableCollection();
 		//DataModel is REALLY a model for filtering data...or for exact matching of filtering data. It picks out rose, tulip and dandelion...
 		//I think the dataToShow method that is passed in should be a filter method. 
-		var flowerModel = new app.DataModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
+		var flowerModel = new app.FilterModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
 		
-
-		var lineModel = new app.DataModel({title: "lineType", values: ["quantity-sold", "quantity-unsold"]})
+		//the next model I need I guess is one for picking which lines? 
+		var yModel = new app.YModel({title: 'Line Charts', values: ["quantity-sold", "quantity-unsold"]});
 
 		// var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData(), titlesToShow: flowerModel.get('dataToShow')});
-
-
+		this.rightView = new app.ValuesTableView({model: flowerModel});
 		tableCollection.add(flowerModel);
+		tableCollection.add(yModel);
 
 		var timechart = d3.select("body").append("div").attr("class","timechart");
 
 		this.centerView = new app.TimeChartView({model: flowerModel, el : timechart});
-		this.rightView = new app.TableView({model: flowerModel});
 	},
 
 	render: function(){
