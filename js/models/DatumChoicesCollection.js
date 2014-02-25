@@ -1,5 +1,5 @@
 var app = app || {};
 
 app.DatumChoicesCollection = Backbone.Collection.extend({
-	model: app.FilterModel
+	model: app.DatumChoiceModel
 });

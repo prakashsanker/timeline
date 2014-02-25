@@ -37,10 +37,26 @@
                         <div class="line-choice">
                             <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
                             <div class="line-title"> {{ this }}</div>
+                            <input type="button" class="add-filter" value="+" ></input>
                         </div>
                     </li>
                 {{/each}}
             </ul>
+    </script>
+    <script id="filter-form" type="text/x-handlebars-template">
+        <div class="add-filter-form">
+            <div class="filter-container">
+
+
+            </div>
+        </div>
+
+    </script>
+    <script id="add-filter" type="text/x-handlebars-template">
+        <div class="filter">
+            <input type="text" class="filter-input"/>
+            <input type="button" class="remove-filter" value="x"/>
+        </div>
     </script>
         <meta charset="UTF-8"/>
         <title>Flowers Data Viz</title>
@@ -54,7 +70,7 @@
         <script src="js/lib/d3tip.js"></script>
         <script src="js/models/DataModel.js"></script>
         <script src= "js/models/LineChoiceModel.js"></script>
-        <script src="js/models/FilterModel.js"></script>
+        <script src="js/models/DatumChoiceModel.js"></script>
         <script src="js/models/DatumChoicesCollection.js"></script>
         <script src="js/models/LineChoicesCollection.js"></script>
         <script src="js/models/ChooserModel.js"></script>

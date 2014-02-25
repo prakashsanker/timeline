@@ -36,7 +36,7 @@ app.AppView = Backbone.View.extend({
 		var lineChoicesCollection = new app.LineChoicesCollection();
 
 		var lineChoiceModel = new app.LineChoiceModel({title: "Line Charts", lineTitles: ["quantity-sold", "quantity-unsold"], linesToShow: []});
-		var flowerModel = new app.FilterModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
+		var flowerModel = new app.DatumChoiceModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
 
 		var chooserModel = new app.ChooserModel({lineChoicesCollection: [], datumChoicesCollection: []});
 
