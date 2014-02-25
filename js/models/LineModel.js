@@ -5,7 +5,8 @@ app.LineModel = Backbone.Model.extend({
 		title: '',
 		value: '',
 		data: [],
-		show: false
+		show: false,
+		lineTitle: ''
 
 	},
 

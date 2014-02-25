@@ -35,7 +35,7 @@ app.AppView = Backbone.View.extend({
 		var datumChoicesCollection = new app.DatumChoicesCollection();
 		var lineChoicesCollection = new app.LineChoicesCollection();
 
-		var lineChoiceModel = new app.LineChoiceModel({title: "Line Charts", linesToShow: ["quantity-sold", "quantity-unsold"]});
+		var lineChoiceModel = new app.LineChoiceModel({title: "Line Charts", lineTitles: ["quantity-sold", "quantity-unsold"], linesToShow: []});
 		var flowerModel = new app.FilterModel({title: "flower", values: ["tulip","rose","dandelion"], dataToShow:["tulip", "rose", "dandelion"], data: data});
 
 		var chooserModel = new app.ChooserModel({lineChoicesCollection: [], datumChoicesCollection: []});
@@ -45,13 +45,18 @@ app.AppView = Backbone.View.extend({
 		lineChoicesCollection.add(lineChoiceModel);
 		datumChoicesCollection.add(flowerModel);
 
+		var timelineData = new app.LineChoicesCollection();
+
 		chooserModel.set('lineChoicesCollection', lineChoicesCollection);
 		chooserModel.set('datumChoicesCollection', datumChoicesCollection);
+		chooserModel.set('data',data);
 
 		// var timelineModel = new app.TimeChartModel({data: flowerModel.getDisplayedData(), titlesToShow: flowerModel.get('dataToShow')});
 		this.rightView = chooserView;
 
 		var timechart = d3.select("body").append("div").attr("class","timechart");
+
+		this.centerView = new app.TimeChartView({collection: timelineData, model: chooserModel});
 
 		// this.centerView = new app.TimeChartView({model: flowerModel, el : timechart});
 	},

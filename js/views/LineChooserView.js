@@ -25,7 +25,7 @@ app.LineChooserView = Backbone.View.extend({
 	render: function(){
 		modelJson = this.model.toJSON();
 		$(this.$el).html(this.template({
-			linesToShow: modelJson.linesToShow
+			lineTitles: modelJson.lineTitles
 		}));
 		return this;
 	}
