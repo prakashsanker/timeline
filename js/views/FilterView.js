@@ -6,13 +6,13 @@ app.FilterView = Backbone.View.extend({
 	template: Handlebars.compile($("#add-filter").html()),
 
 	events: {
-		"click .remove-filter" : "removeFilter"
+		"click .remove-filter" : "removeFilter",
 		"click .select-filter" : "toggleFilter"
 	},
 
 	toggleFilter: function(e){
 		var checkbox = e.eventTarget;
-		if $(checkbox).is(":checked"){
+		if($(checkbox).is(":checked")){
 			this.model.set('applied', true);
 		} else {
 			this.model.set('applied', false);
@@ -27,13 +27,18 @@ app.FilterView = Backbone.View.extend({
 	},
 
 	initialize: function(options){
+		this.model.on("change", this.render, this);
 		this.render();
-
-
 	}, 
 
 	render: function(){
-		$(this.$el).append()
+		var modelJson = this.model.toJSON();
+		console.log("MODEL JSON");
+		console.log(modelJson);
+		$(this.$el).append(this.template({
+			applied: modelJson.applied,
+			filterText: modelJson.filterText
+		}));
 
 		return this;
 

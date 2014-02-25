@@ -37,29 +37,25 @@
                         <div class="line-choice">
                             <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
                             <div class="line-title"> {{ this }}</div>
-                            <input type="button" class="add-filter" value="+" ></input>
-                            <div class="filters-container">
-
-                            </div>
+                            <div class="filter-container"></div>
                         </div>
                     </li>
                 {{/each}}
             </ul>
     </script>
     <script id="filter-form" type="text/x-handlebars-template">
-        <div class="add-filter-form">
-            <div class="filters-container">
-
-
-            </div>
-        </div>
+            <input type="button" class="add-filter" value="+" ></input>
 
     </script>
     <script id="add-filter" type="text/x-handlebars-template">
         <div class="filter-container">
-            <input type="text" class="filter-input"/>
+            <input type="text" class="filter-input" value={{filterText}} readonly="">
             <input type="button" class="remove-filter" value="x" data-cid={{ cid }}/>
-            <input type="checkbox" class="select-filter"/>
+            {{#if applied}}
+                <input type="checkbox" class="select-filter" checked=""/>
+            {{else}}
+                <input type="checkbox" class="select-filter"/>
+            {{/if}}
         </div>
     </script>
         <meta charset="UTF-8"/>
@@ -82,12 +78,17 @@
         <script src="js/models/TimeChartModel.js"></script>
         <script src="js/models/LineModel.js"></script>
         <script src="js/models/LinesCollection.js"></script>
+        <script src="js/models/FilterModel.js"></script>
+        <script src="js/models/FiltersCollection.js"></script>
+        <script src="js/views/FilterView.js"></script>
+        <script src="js/views/FiltersView.js"></script>
         <script src="js/views/LineChooserView.js"></script>
         <script src="js/views/ChooserView.js"></script>
         <script src="js/views/TimeChartView.js"></script>
-        <script src="js/views/AppView.js"></script>
         <script src="js/views/ValuesTableView.js"></script>
         <script src="js/views/LineView.js"></script>
+        <script src="js/views/AppView.js"></script>
+
 
 
 

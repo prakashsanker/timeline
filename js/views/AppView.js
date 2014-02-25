@@ -27,7 +27,6 @@ app.AppView = Backbone.View.extend({
 
 
 
-		var tableCollection = new app.TableCollection();
 		//DataModel is REALLY a model for filtering data...or for exact matching of filtering data. It picks out rose, tulip and dandelion...
 		//I think the dataToShow method that is passed in should be a filter method. 
 		

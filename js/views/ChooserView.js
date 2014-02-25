@@ -7,6 +7,15 @@ app.ChooserView = Backbone.View.extend({
 	childViews: [],
 
 
+	addFilterArea: function(e){
+		console.log("ADD FILTER AREA");
+		var filtersContainer = $(e.eventTarget).siblings(".filters-container");
+		this.filters = new app.FiltersCollection();
+		this.filtersView = new app.FiltersView({collection: this.filters});
+		$(filtersContainer).append(this.filtersView.render().$el);
+	},
+
+
 	initialize: function(){
 		this.model.on("add", this.render, this);
 		$(this.$el).html(this.template());
@@ -30,6 +39,8 @@ app.ChooserView = Backbone.View.extend({
 			$(listToAppendTo).append(lineChoicesView.render().$el);
 			childViews.push(lineChoicesView);
 		});
+
+		
 		return this;
 	}
 

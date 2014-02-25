@@ -1,7 +1,6 @@
 var app = app || {};
 
-app = Backbone.Collections.extend({
-	model: app.FilterModel
-
-
+app.FiltersCollection = Backbone.Collection.extend({
+	model: app.FilterModel,
+	title: ''
 });

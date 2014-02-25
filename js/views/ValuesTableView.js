@@ -8,6 +8,13 @@ app.ValuesTableView = Backbone.View.extend({
 	events: {
 		'click .data-type' : 'collapseDatum',
 		'click .show-datum' : 'addDatumToShow',
+		'click .add-filter' : 'addFilter'
+	},
+
+	addFilter: function(e){
+		
+
+
 	},
 
 	collapseDatum: function(e){

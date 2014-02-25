@@ -27,6 +27,16 @@ app.LineChooserView = Backbone.View.extend({
 		$(this.$el).html(this.template({
 			lineTitles: modelJson.lineTitles
 		}));
+
+		var el = this.$el;
+
+		var lineChoices = $(this.$el).find(".line-choice");
+		_(lineChoices).each(function(choice, key, list){
+			var lineTitle = $(choice).find(".line-title").val();
+			var newFiltersCollection = new app.FiltersCollection({title: lineTitle});
+			var newFiltersView = new app.FiltersView({collection: newFiltersCollection});
+			$(el).append(newFiltersView.render().$el);
+		});
 		return this;
 	}
 
