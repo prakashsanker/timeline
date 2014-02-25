@@ -38,6 +38,9 @@
                             <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
                             <div class="line-title"> {{ this }}</div>
                             <input type="button" class="add-filter" value="+" ></input>
+                            <div class="filters-container">
+
+                            </div>
                         </div>
                     </li>
                 {{/each}}
@@ -45,7 +48,7 @@
     </script>
     <script id="filter-form" type="text/x-handlebars-template">
         <div class="add-filter-form">
-            <div class="filter-container">
+            <div class="filters-container">
 
 
             </div>
@@ -53,9 +56,10 @@
 
     </script>
     <script id="add-filter" type="text/x-handlebars-template">
-        <div class="filter">
+        <div class="filter-container">
             <input type="text" class="filter-input"/>
-            <input type="button" class="remove-filter" value="x"/>
+            <input type="button" class="remove-filter" value="x" data-cid={{ cid }}/>
+            <input type="checkbox" class="select-filter"/>
         </div>
     </script>
         <meta charset="UTF-8"/>

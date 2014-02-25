@@ -4,7 +4,8 @@ app.FilterModel = Backbone.Model.extend({
 	defaults: {
 		filterText: '',
 		filterFunction: {},
-		fieldToFilter: {}
+		fieldToFilter: {},
+		applied: false
 
 	},
 
