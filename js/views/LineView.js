@@ -29,13 +29,6 @@ app.LineView = Backbone.View.extend({
 		    var color = d3.scale.category10();
 		    var data = this.model.get('data');
 
-		    // console.log("SVG");
-		    // console.log(this.svg);
-		    // console.log("TITLE");
-		    // console.log(this.model.get('title'));
-
-		    // console.log("VALUE");
-		    // console.log(this.model.get('value'));
 		   	data.sort(function(d1, d2){
 			  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
 			  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
@@ -47,22 +40,36 @@ app.LineView = Backbone.View.extend({
 		            newData.push(row);
 		        }
 		    }
+			var maxXScaleVal = 0;
+			var maxYScaleVal = 0;
 
 			var line = d3.svg.line()
 			.interpolate("linear")
 			.x(function(d) { 
 				var date = d["date"].match(/(\d+)/g);
 				date = new Date(date[2], date[0], date[1]);
-				return xScale(date)})
+				xScaleDateVal = xScale(date);
+
+				if(xScaleDateVal > maxXScaleVal){
+					console.log("X SCALED ATE VAL");
+					console.log(xScaleDateVal);
+					maxXScaleVal = xScaleDateVal;
+				}
+				return xScaleDateVal;})
 			.y(function(d,i) { 
 				var yVal = yScale(d[model.get('lineTitle')]);
+				if(yVal > maxYScaleVal){
+					maxYScaleVal = yVal;
+				}
 				return yVal});
+
 
 			this.path = svg.append("path")
 				.attr("d", line(newData))
 				.style("stroke", function(d,i) { return color(i); })
 				.attr("fill","none")
 				.attr("class","line");
+
 
 			var totalLength = this.path.node().getTotalLength();
 
@@ -73,6 +80,11 @@ app.LineView = Backbone.View.extend({
 		        .duration(2000)
 		        .ease("linear")
 		        .attr("stroke-dashoffset", 0);
+
+		    this.svg.append("text")
+		    	.attr("x", maxXScaleVal + 10)
+		    	.attr("y", maxYScaleVal)
+		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');});
 
 		    svg.selectAll('.point')//this will break... 
 		    	.data(newData)
@@ -90,6 +102,8 @@ app.LineView = Backbone.View.extend({
 		    	.attr("fill", "red")
 		    	.attr("r", 4)
 		    	.attr("class","point");
+
+
 
 	    } else {
 
