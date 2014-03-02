@@ -8,16 +8,17 @@ app.FiltersView = Backbone.View.extend({
 	events: {
 		"click .add-filter" : "addFilter"
 
+
 	},
 
 	addFilter: function(e){
-		var filterText = $(this.$el).find(".filter-input").val();
-		var newFilterModel = new app.FilterModel({filterText: filterText, applied: true});
+		var newFilterModel = new app.FilterModel({filterText: "", applied: false, fieldToFilter: this.fieldToFilter});
 		this.collection.add(newFilterModel);
 	},
 	
 	initialize: function(options){
 		this.collection.on("add", this.render, this);
+		this.fieldToFilter = options.fieldToFilter;
 	},
 
 	render: function(){
@@ -27,16 +28,17 @@ app.FiltersView = Backbone.View.extend({
 
 		$(el).append(this.template());
 
-
+		console.log("COLLECTION LENGTH : ");
+		console.log(this.collection.length);
+		var collection = this.collection;
 		this.collection.each(function(filter,key,list){
-			console.log("FILTER");
+			console.log("FILTERS");
 			console.log(filter);
-			var newFilterView = new app.FilterView({model: filter});
+			var newFilterView = new app.FilterView({model: filter, collection: collection});
 			$(el).append(newFilterView.render().$el);
 		});
 
 
-		console.log("FILTERS VIEW RENDER");
 		return this;
 
 	}

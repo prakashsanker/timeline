@@ -18,9 +18,80 @@ app.LineView = Backbone.View.extend({
 		return this;
 	},
 
+	applyFilters: function(filters, data){
+		//figure which this filter is. 
+		var model = this.model;
+		var newData = data;
+		var filteredData = [];
+		var appliedFilters = filters.filter(function(model){
+			if(model.get('applied')){
+				return model;
+			}
+		});
+		console.log("APPLIED FILTERS");
+		console.log(appliedFilters);
+		_(newData).each(function(datum, datumKey, datumList){
+			temporaryFilteredData = [];
+			_(appliedFilters).each(function(filter, filterKey, filterList){
+				var equalLessThan = /<=([\d]*)/;
+				var lessThan = /<([\d]*)/;
+				var equalDigit = /=([\d]*)/;
+				var greaterThanEqual = />=([\d]*)/;
+				var greaterThan = />([\d]*)/;
+				var match = null;	
+				var lineTitle = model.get('lineTitle');
+				console.log("LINE TITLE");
+				console.log(lineTitle);
+				var filterText = filter.get('filterText');
+				console.log("FILTER TEXT");
+				console.log(filterText);
+				if(filterText.match(equalLessThan)){
+					condition = equalLessThan.exec(filterText)[1];
+					if(parseInt(datum[lineTitle]) <= parseInt(condition)){
+						temporaryFilteredData.push(datum);
+					}
+				}
+
+				if(filterText.match(lessThan)){
+					condition = lessThan.exec(filterText)[1];
+
+					if(parseInt(datum[lineTitle]) < parseInt(condition)){
+						temporaryFilteredData.push(datum);
+					}
+				}
+
+				if(filterText.match(equalDigit)){
+					condition = equalDigit.exec(filterText)[1];
+					if(parseInt(datum[lineTitle]) == parseInt(condition)){
+						temporaryFilteredData.push(datum);
+					}
+				}
+				if(filterText.match(greaterThanEqual)){
+					condition = greaterThanEqual.exec(filterText)[1];
+					if(parseInt(datum[lineTitle]) >= parseInt(condition)){
+						temporaryFilteredData.push(datum);
+					}
+				}
+
+				if(filterText.match(greaterThan)){
+					condition = greaterThan.exec(filterText)[1];
+					if(parseInt(datum[lineTitle]) > parseInt(condition)){
+						temporaryFilteredData.push(datum);
+					}
+				}
+			});
+			console.log("TEMP FILTERED");
+			console.log(temporaryFilteredData);
+			newData = temporaryFilteredData;		
+		});
+
+		console.log("NEW DATA");
+		console.log(newData);
+		return newData; 
+	},
+
 	render: function(){
 		if(this.model.get('show')){
-		    var nData = this.model.get('data').length;
 		    var newData = [];
 		    var xScale = this.xScale;
 		    var yScale = this.yScale;
@@ -28,7 +99,9 @@ app.LineView = Backbone.View.extend({
 		    var svg = this.svg;
 		    var color = d3.scale.category10();
 		    var data = this.model.get('data');
-
+		    var filters = this.model.get('filters');
+		    data = this.applyFilters(filters, data);
+		    var nData = data.length;
 		   	data.sort(function(d1, d2){
 			  var d1 = d1.date.split('/'), d2 = d2.date.split('/');
 			  return new Date(d1[2], d1[0] - 1, d1[1]) - new Date(d2[2], d2[0] - 1, d2[1]);
@@ -51,8 +124,6 @@ app.LineView = Backbone.View.extend({
 				xScaleDateVal = xScale(date);
 
 				if(xScaleDateVal > maxXScaleVal){
-					console.log("X SCALED ATE VAL");
-					console.log(xScaleDateVal);
 					maxXScaleVal = xScaleDateVal;
 				}
 				return xScaleDateVal;})

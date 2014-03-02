@@ -56,10 +56,6 @@ app.TimeChartView = Backbone.View.extend({
 
 			var yAxis = d3.svg.axis().scale(this.yScale).orient("right").ticks(7);
 			this.svg.append("g").call(yAxis); //need to find this
-			console.log("SVG IN INIT");
-			console.log(this.svg);
-			
-
 			return this;
 	},
 
@@ -76,8 +72,10 @@ app.TimeChartView = Backbone.View.extend({
     	var linesToShow = []
     	var lineChoicesCollection = this.model.get('lineChoicesCollection');
     	var datumChoicesCollection = this.model.get('datumChoicesCollection');
+    	var filtersObjects = [];
     	lineChoicesCollection.each(function(model,key,list){
     		linesToShow.push(model.get('linesToShow'));
+    		filtersObjects.push(model.get('filters'));
     	});
 
     	var dataToDisplay = []
@@ -93,8 +91,6 @@ app.TimeChartView = Backbone.View.extend({
     	var yScale = this.yScale;
     	dataToShow = _.flatten(dataToShow);
     	linesToShow = _.flatten(linesToShow);
-    	console.log("LINES TO SHOW");
-    	console.log(linesToShow);
 
 		d3.selectAll('.line').remove();
 		d3.selectAll('.point').remove();    	
@@ -102,16 +98,20 @@ app.TimeChartView = Backbone.View.extend({
     	_(linesToShow).each(function(value,lineKey,lineList){
     		_(dataToShow).each(function(datumToShow, datumKey, datumList){
     			_(dataToDisplay).each(function(toDisplay, rowKey, rowList){
-    				console.log("VALUE");
-    				console.log(value);
-    				console.log("DATUM TO SHOW");
-    				console.log(datumToShow);
+    				_(filtersObjects).each(function(filters, filterKey, filtersList){
+	   					var filters = filters[value];
+		    			var newTimeLine = new app.LineModel({lineTitle: value, title: toDisplay[1], value: datumToShow, data: toDisplay[0], show: true, filters: filters});
+		    			var newTimeLineView = new app.LineView({model: newTimeLine, svg: svg, xScale: xScale, yScale: yScale});
+		    			$(el).append(newTimeLineView.render().$el);
+    				});
+    				// console.log("VALUE");
+    				// console.log(value);
+    				// console.log("DATUM TO SHOW");
+    				// console.log(datumToShow);
     				// console.log("row");
     				// console.log(row);
 
-	    			var newTimeLine = new app.LineModel({lineTitle: value, title: toDisplay[1], value: datumToShow, data: toDisplay[0], show: true});
-	    			var newTimeLineView = new app.LineView({model: newTimeLine, svg: svg, xScale: xScale, yScale: yScale});
-	    			$(el).append(newTimeLineView.render().$el);
+ 
     			});
 
     		});
