@@ -1,0 +1,29 @@
+html,body {
+	height: 100%;
+}
+.tooltip {
+	position: absolute;
+	text-align: center;
+	width: 50px;
+	height: 30px;
+	padding: 2px;
+	font: 12px sans-serif;
+	border: 0px;
+	border-radius: 8px;
+	pointer-events: none;
+}
+
+.timechart {
+	display: inline-block;
+	position: absolute;
+}
+
+.dashboard {
+	position: absolute;
+	left: 650px;
+}
+
+.show-datum, .show-line-choice, .datum-title, .line-title, .add-filter {
+	display: inline-block;
+}
+

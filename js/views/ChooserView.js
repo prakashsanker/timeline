@@ -8,7 +8,6 @@ app.ChooserView = Backbone.View.extend({
 
 
 	addFilterArea: function(e){
-		console.log("ADD FILTER AREA");
 		var filtersContainer = $(e.eventTarget).siblings(".filters-container");
 		this.filters = new app.FiltersCollection();
 		this.filtersView = new app.FiltersView({collection: this.filters});

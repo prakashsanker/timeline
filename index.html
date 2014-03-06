@@ -12,14 +12,17 @@
     </script>
     <script id="value-chooser" type="text/x-handlebars-template">
         <div class="data-type">
-            <input type="checkbox" class="show-data-type"/>
+            <div class="dropup-arrow arrow"></div>
             {{this.title}}
         </div>
             <ul class="datum-list" data-collapsed-state="uncollapsed">
                 {{#each this.values}}
                     <li> 
                         <div class="datum">
-                            <input type="checkbox" data-title={{ this }} class="show-datum"/>
+                            <div class="checkbox">
+                                <input type="checkbox" data-title={{ this }} id="checkbox{{@index}}" class="show-datum"/>
+                                <label for="checkbox{{@index}}"></label>
+                            </div>
                              <div class="datum-title">   {{ this }} </div>
                         </div>
                     </li>
@@ -33,6 +36,7 @@
                 {{#each this.lineTitles}}
                     <li>
                         <div class="line-choice">
+
                             <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
                             <div class="line-title"> {{ this }}</div>
                             <div class="filter-container"></div>
@@ -88,9 +92,10 @@
         <script src="js/views/AppView.js"></script>
 
 
+        <link href='http://fonts.googleapis.com/css?family=Roboto:thin,i' rel='stylesheet' type='text/css'>
 
-
-
+        <link rel="stylesheet" type="text/css" href="css/reset.css"/>
+        <link rel="stylesheet" type="text/css" href="css/general.css"/>
         <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
         <link rel="stylesheet" type="text/css" href="js/lib/css/smoothness/jquery-ui.1.10.4.css"/>
     </script>

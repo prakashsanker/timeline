@@ -15,6 +15,7 @@ app.LineView = Backbone.View.extend({
 		this.yScale = options.yScale;
 
 		this.model.on('change:show', this.render, this);
+		this.model.on('change:filters', this.render,this);
 		return this;
 	},
 
@@ -30,9 +31,9 @@ app.LineView = Backbone.View.extend({
 		});
 		console.log("APPLIED FILTERS");
 		console.log(appliedFilters);
-		_(newData).each(function(datum, datumKey, datumList){
+		_(appliedFilters).each(function(filter, filterKey, filterList){
 			temporaryFilteredData = [];
-			_(appliedFilters).each(function(filter, filterKey, filterList){
+			_(newData).each(function(datum, datumKey, datumList){
 				var equalLessThan = /<=([\d]*)/;
 				var lessThan = /<([\d]*)/;
 				var equalDigit = /=([\d]*)/;
@@ -80,10 +81,9 @@ app.LineView = Backbone.View.extend({
 					}
 				}
 			});
-			console.log("TEMP FILTERED");
-			console.log(temporaryFilteredData);
-			newData = temporaryFilteredData;		
+			newData = temporaryFilteredData;
 		});
+
 
 		console.log("NEW DATA");
 		console.log(newData);
