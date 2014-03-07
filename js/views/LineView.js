@@ -98,6 +98,7 @@ app.LineView = Backbone.View.extend({
 		    var model = this.model;
 		    var svg = this.svg;
 		    var color = d3.scale.category10();
+		    color.domain([0,1,2,3,4,5,6,7,8,9])
 		    var data = this.model.get('data');
 		    var filters = this.model.get('filters');
 		    data = this.applyFilters(filters, data);
@@ -137,7 +138,11 @@ app.LineView = Backbone.View.extend({
 
 			this.path = svg.append("path")
 				.attr("d", line(newData))
-				.style("stroke", function(d,i) { return color(i); })
+				.style("stroke", function(d,i) { 
+					var colorIndex = Math.floor(Math.random() * (10 - 0) + 0);
+					console.log("COLOR INDEX");
+					console.log(colorIndex);
+					return color(colorIndex); })
 				.attr("fill","none")
 				.attr("class","line");
 
@@ -157,22 +162,22 @@ app.LineView = Backbone.View.extend({
 		    	.attr("y", maxYScaleVal)
 		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');});
 
-		    svg.selectAll('.point')//this will break... 
-		    	.data(newData)
-		    	.enter()
-		    	.append("svg:circle")
-		    	.attr("cx", function(d,i){ 
-		    		var date = d["date"].match(/(\d+)/g);
-					date = new Date(date[2], date[0], date[1]);
-					return xScale(date);
-		    	})
-		    	.attr("cy", function(d,i){
-		    		var quantitySold = yScale(d[model.get('lineTitle')]);
-		    		return quantitySold;
-		    	})
-		    	.attr("fill", "red")
-		    	.attr("r", 4)
-		    	.attr("class","point");
+		   //  svg.selectAll('.point')//this will break... 
+		   //  	.data(newData)
+		   //  	.enter()
+		   //  	.append("svg:circle")
+		   //  	.attr("cx", function(d,i){ 
+		   //  		var date = d["date"].match(/(\d+)/g);
+					// date = new Date(date[2], date[0], date[1]);
+					// return xScale(date);
+		   //  	})
+		   //  	.attr("cy", function(d,i){
+		   //  		var quantitySold = yScale(d[model.get('lineTitle')]);
+		   //  		return quantitySold;
+		   //  	})
+		   //  	.attr("fill", "red")
+		   //  	.attr("r", 4)
+		   //  	.attr("class","point");
 
 
 
