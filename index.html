@@ -30,14 +30,19 @@
             </ul>
     </script>
     <script id="line-chooser" type="text/x-handlebars-template">
-            <input type="checkbox" class="show-line-choices"/>
-            {{this.title}}
+            <div class="line-title-container">
+                <div class="dropup-arrow arrow"/>
+                    {{this.title}}
+            </div>
+
             <ul class="line-choice-list" data-collapsed-state="uncollapsed">
                 {{#each this.lineTitles}}
                     <li>
                         <div class="line-choice">
-
-                            <input type="checkbox" data-line-title={{ this }} class="show-line-choice"/>
+                            <div class="checkbox">
+                                <input type="checkbox" data-line-title={{ this }} id="line-checkbox{{@index}}" class="show-line-choice"/>
+                                <label for="line-checkbox{{@index}}">
+                            </div>
                             <div class="line-title"> {{ this }}</div>
                             <div class="filter-container"></div>
                         </div>
@@ -45,18 +50,26 @@
                 {{/each}}
             </ul>
     </script>
+    <script id="filters-area" type="text/x-handlebars-template">
+        <div class="filters"></div>
+    </script>
     <script id="filter-form" type="text/x-handlebars-template">
-            <input type="button" class="add-filter" value="+" ></input>
+            <div class="add-filter">+</input>
 
     </script>
     <script id="add-filter" type="text/x-handlebars-template">
         <div class="filter-container">
             <input type="text" class="filter-input" value={{filterText}}></input>
-            <input type="button" class="remove-filter" value="x" data-cid={{ cid }}/>
+            <div class="remove-filter" data-cid={{cid}}>&#10006</div>
             {{#if applied}}
-                <input type="checkbox" class="select-filter" checked=""/>
+                <div class="checkbox">
+                    <input type="checkbox" class="select-filter" id="filter-checkbox{{id}}"checked=""/>
+                    <label for="filter-checkbox{{id}}"/>
+                </div>
             {{else}}
-                <input type="checkbox" class="select-filter"/>
+                <div class="checkbox">
+                    <input type="checkbox" class="select-filter" id="filter-checkbox{{id}}"/>
+                <label for="filter-checkbox{{id}}"/>
             {{/if}}
         </div>
     </script>
@@ -97,6 +110,7 @@
         <link rel="stylesheet" type="text/css" href="css/reset.css"/>
         <link rel="stylesheet" type="text/css" href="css/general.css"/>
         <link rel="stylesheet" type="text/css" href="css/dashboard.css"/>
+        <link rel="stylesheet" type="text/css" href="css/timechart.css"/>
         <link rel="stylesheet" type="text/css" href="js/lib/css/smoothness/jquery-ui.1.10.4.css"/>
     </script>
     </head>

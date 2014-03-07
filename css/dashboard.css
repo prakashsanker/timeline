@@ -26,28 +26,29 @@
 	border-bottom: 1px solid #E0E0E0;
 	padding-bottom: 10px;
 }
-.datum, .data-type {
+.datum, .data-type, .line-choice {
 	padding-bottom: 10px;
 }
 
 
-	.datum-title {
+	.datum-title, .line-title {
 		padding-left: 10px;
 	}
 
 .checkbox {
-width: 10px;
-height: 10px;
-background: #ddd;
-border-radius: 100%;
-position: relative;
--webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
--mox-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
-display: inline-block;
+	display: inline-block;
+	width: 10px;
+	height: 10px;
+	background: #ddd;
+	border-radius: 100%;
+	position: relative;
+	-webkit-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+	-mox-box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+	box-shadow: 0px 1px 3px rgba(0,0,0,0.5);
+	display: inline-block;
 }
 
-.datum-list {
+.datum-list, .line-choice-list {
 	padding-left: 15px;
 }
 
@@ -106,3 +107,48 @@ input[type=checkbox] {
 	border-bottom: 5px solid #FFFFFF;
 	display: inline-block;
 }
+
+
+.line-title-container {
+	margin-bottom: 10px;
+}
+
+
+
+.add-filter {
+	display: inline-block;
+	cursor: hand;
+}
+
+.filters {
+	display: inline-block;
+	background: #42526C;
+}
+
+.line-title {
+	padding-bottom: 10px;
+}
+
+.filter-input {
+	background: none;
+	border: none;
+	border-bottom: 1px solid #6D9BF1;
+	display: inline-block;
+}
+
+.remove-filter {
+	display: inline-block;
+	margin-right: 5px;
+}
+
+.filters {
+	margin-left: 20px;
+	padding: 2px;
+	padding-right: 5px;
+}
+
+
+.filter-container{
+	display: inline-block;
+}
+

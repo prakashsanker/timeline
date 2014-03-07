@@ -13,6 +13,9 @@ app.TimeChartView = Backbone.View.extend({
 		this.margin = {top: 20, right: 80, bottom: 30, left: 50};
     	this.width = 600 - this.margin.left - this.margin.right;
     	this.height = 500 - this.margin.top - this.margin.bottom;
+     	$('body').find('.dashboard').css('height', this.height);
+
+    	$('body').css('height', this.height);
 		var data = this.model.get('data');
 
 		d3.select(".timechart").select("svg").remove();
@@ -52,10 +55,11 @@ app.TimeChartView = Backbone.View.extend({
 
 			this.svg.append("g")
 				.attr("transform", "translate(0," + this.height + ")")
+				.attr("class", "axis")
 				.call(xAxis);
 
-			var yAxis = d3.svg.axis().scale(this.yScale).orient("right").ticks(7);
-			this.svg.append("g").call(yAxis); //need to find this
+			var yAxis = d3.svg.axis().scale(this.yScale).orient("left").ticks(7);
+			this.svg.append("g").attr("class","axis").call(yAxis); //need to find this
 			return this;
 	},
 

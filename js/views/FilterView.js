@@ -30,15 +30,18 @@ app.FilterView = Backbone.View.extend({
 
 	initialize: function(options){
 		this.model.on("change:applied", this.render, this);
+		this.id = options.id;
 		this.render();
 	}, 
 
 	render: function(){
 		$(this.$el).empty();
 		var modelJson = this.model.toJSON();
+		var id = this.id;
 		$(this.$el).append(this.template({
 			applied: modelJson.applied,
-			filterText: modelJson.filterText
+			filterText: modelJson.filterText,
+			id: id
 		}));
 
 		return this;
