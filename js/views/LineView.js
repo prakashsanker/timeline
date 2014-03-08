@@ -123,17 +123,19 @@ app.LineView = Backbone.View.extend({
 				var date = d["date"].match(/(\d+)/g);
 				date = new Date(date[2], date[0], date[1]);
 				xScaleDateVal = xScale(date);
-
-				if(xScaleDateVal > maxXScaleVal){
-					maxXScaleVal = xScaleDateVal;
-				}
+				maxXScaleVal = xScaleDateVal;
 				return xScaleDateVal;})
 			.y(function(d,i) { 
 				var yVal = yScale(d[model.get('lineTitle')]);
-				if(yVal > maxYScaleVal){
-					maxYScaleVal = yVal;
-				}
+				console.log("YVAL");
+				console.log(yVal);
+				console.log("MAX SCALE VAL");
+				console.log(maxYScaleVal);
+				console.log("******");
+				maxYScaleVal = yVal;
 				return yVal});
+
+
 
 
 			this.path = svg.append("path")
@@ -143,6 +145,8 @@ app.LineView = Backbone.View.extend({
 					return color(colorIndex); })
 				.attr("fill","none")
 				.attr("class","line");
+
+
 
 
 			var totalLength = this.path.node().getTotalLength();
@@ -155,8 +159,9 @@ app.LineView = Backbone.View.extend({
 		        .ease("linear")
 		        .attr("stroke-dashoffset", 0);
 
+
 		    this.svg.append("text")
-		    	.attr("x", maxXScaleVal + 10)
+		    	.attr("x", maxXScaleVal - 50)
 		    	.attr("y", maxYScaleVal)
 		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');});
 
