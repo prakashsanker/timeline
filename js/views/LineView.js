@@ -13,9 +13,7 @@ app.LineView = Backbone.View.extend({
 		this.svg = options.svg;
 		this.xScale = options.xScale;
 		this.yScale = options.yScale;
-
-		this.model.on('change:show', this.render, this);
-		this.model.on('change:filters', this.render,this);
+		this.filters = this.model.get('filters');
 		return this;
 	},
 
@@ -29,8 +27,8 @@ app.LineView = Backbone.View.extend({
 				return model;
 			}
 		});
-		console.log("APPLIED FILTERS");
-		console.log(appliedFilters);
+		// console.log("APPLIED FILTERS");
+		// console.log(appliedFilters);
 		_(appliedFilters).each(function(filter, filterKey, filterList){
 			temporaryFilteredData = [];
 			_(newData).each(function(datum, datumKey, datumList){
@@ -41,11 +39,9 @@ app.LineView = Backbone.View.extend({
 				var greaterThan = />([\d]*)/;
 				var match = null;	
 				var lineTitle = model.get('lineTitle');
-				console.log("LINE TITLE");
-				console.log(lineTitle);
 				var filterText = filter.get('filterText');
-				console.log("FILTER TEXT");
-				console.log(filterText);
+				// console.log("FILTER TEXT");
+				// console.log(filterText);
 				if(filterText.match(equalLessThan)){
 					condition = equalLessThan.exec(filterText)[1];
 					if(parseInt(datum[lineTitle]) <= parseInt(condition)){
@@ -85,12 +81,13 @@ app.LineView = Backbone.View.extend({
 		});
 
 
-		console.log("NEW DATA");
-		console.log(newData);
+		// console.log("NEW DATA");
+		// console.log(newData);
 		return newData; 
 	},
 
 	render: function(){
+		console.log("RENDER LINE");
 		if(this.model.get('show')){
 		    var newData = [];
 		    var xScale = this.xScale;
@@ -140,8 +137,6 @@ app.LineView = Backbone.View.extend({
 				.attr("d", line(newData))
 				.style("stroke", function(d,i) { 
 					var colorIndex = Math.floor(Math.random() * (10 - 0) + 0);
-					console.log("COLOR INDEX");
-					console.log(colorIndex);
 					return color(colorIndex); })
 				.attr("fill","none")
 				.attr("class","line");
@@ -161,25 +156,6 @@ app.LineView = Backbone.View.extend({
 		    	.attr("x", maxXScaleVal + 10)
 		    	.attr("y", maxYScaleVal)
 		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');});
-
-		   //  svg.selectAll('.point')//this will break... 
-		   //  	.data(newData)
-		   //  	.enter()
-		   //  	.append("svg:circle")
-		   //  	.attr("cx", function(d,i){ 
-		   //  		var date = d["date"].match(/(\d+)/g);
-					// date = new Date(date[2], date[0], date[1]);
-					// return xScale(date);
-		   //  	})
-		   //  	.attr("cy", function(d,i){
-		   //  		var quantitySold = yScale(d[model.get('lineTitle')]);
-		   //  		return quantitySold;
-		   //  	})
-		   //  	.attr("fill", "red")
-		   //  	.attr("r", 4)
-		   //  	.attr("class","point");
-
-
 
 	    } else {
 

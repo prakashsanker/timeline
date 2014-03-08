@@ -6,7 +6,8 @@ app.LineModel = Backbone.Model.extend({
 		value: '',
 		data: [],
 		show: false,
-		lineTitle: ''
+		lineTitle: '',
+		filters: []
 
 	},
 
@@ -18,7 +19,4 @@ app.LineModel = Backbone.Model.extend({
 		var linesToShow = this.get('linesToShow');
 		var data = this.get('data');
 	}
-
-
-
 });

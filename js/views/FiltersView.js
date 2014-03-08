@@ -19,27 +19,29 @@ app.FiltersView = Backbone.View.extend({
 	
 	initialize: function(options){
 		this.collection.on("add", this.render, this);
+		this.collection.on("change:applied", this.filterChanged, this);
+		this.collection.on("remove", this.filterChanged,this);
 		this.fieldToFilter = options.fieldToFilter;
 	},
+
+	filterChanged: function(){
+		//this might be a hack
+		this.model.trigger("change");
+	},
+
+
 
 	render: function(){
 		var el = this.$el;
 
 		$(el).empty();
 		$(el).append(this.template());
-
-		console.log("COLLECTION LENGTH : ");
-		console.log(this.collection.length);
 		var collection = this.collection;
 		var filtersTemplate = this.filtersTemplate;
 		this.collection.each(function(filter,key,list){
-			console.log("KEY");
-			console.log(key);
 			if(key == 0){
 				$(el).append(filtersTemplate());
 			}
-			console.log("FILTERS");
-			console.log(filter);
 			var newFilterView = new app.FilterView({model: filter, collection: collection, id: key});
 			$(el).find(".filters").append(newFilterView.render().$el);
 		});

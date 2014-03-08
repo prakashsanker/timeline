@@ -18,7 +18,7 @@ app.FilterView = Backbone.View.extend({
 		if($(checkbox).is(":checked")){
 			this.model.set('applied', true);
 		} else {
-
+			console.log("APPLIED FALSE");
 			this.model.set('applied', false);
 		}
 	},

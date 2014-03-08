@@ -35,12 +35,13 @@ app.LineChooserView = Backbone.View.extend({
 		var lineChoices = $(this.$el).find(".line-choice");
 		this.filters = {}
 		var filters = this.filters;
+		var that = this;
 		_(lineChoices).each(function(choice, key, list){
 			var lineTitle = $(choice).find(".line-title").text();
 			lineTitle = $.trim(lineTitle);
 			var newFiltersCollection = new app.FiltersCollection();
 			filters[lineTitle] = newFiltersCollection;
-			var newFiltersView = new app.FiltersView({collection: newFiltersCollection, fieldToFilter: lineTitle});
+			var newFiltersView = new app.FiltersView({collection: newFiltersCollection, fieldToFilter: lineTitle, model: that.model});
 			$(el).find(choice).append(newFiltersView.render().$el);
 		});
 		return this;
