@@ -6,10 +6,27 @@ app.LineChooserView = Backbone.View.extend({
 	template: Handlebars.compile($("#line-chooser").html()),
 
 	events: {
-		'click .show-line-choice': 'addLineToChart'
+		'click .show-line-choice': 'addLineToChart',
+		'click .line-title-container' : 'collapseLine'
 	},
 
-	addLineToChart: function(e){
+	collapseLine: function(e) {
+		var collapsedState = $(this.$el).find(".line-choice-list").data('collapsed-state');
+		var arrow = $(this.$el).find(".arrow");
+		if(collapsedState == "collapsed"){
+			$(this.$el).find(".line-choice-list").slideDown();
+			$(this.$el).find(".line-choice-list").data("collapsed-state", "uncollapsed");
+			$(arrow).removeClass("dropdown-arrow");
+			$(arrow).addClass("dropup-arrow");
+		} else {
+			$(this.$el).find(".line-choice-list").data("collapsed-state", "collapsed");
+			$(this.$el).find(".line-choice-list").slideUp();
+			$(arrow).removeClass("dropup-arrow");
+			$(arrow).addClass("dropdown-arrow");
+		}
+	},
+
+	addLineToChart: function(e) {
 		var linesToAdd = $(this.$el).find('.show-line-choice:checked');
 		var linesToShow = [];
 		_.each(linesToAdd, function(value, key, list){
@@ -19,11 +36,11 @@ app.LineChooserView = Backbone.View.extend({
 		this.model.set('filters', this.filters);
 	},
 
-	initialize: function(){
+	initialize: function() {
 		return this.$el;
 	},
 
-	render: function(){
+	render: function() {
 		modelJson = this.model.toJSON();
 		$(this.$el).html(this.template({
 			lineTitles: modelJson.lineTitles,
