@@ -14,6 +14,9 @@ app.LineView = Backbone.View.extend({
 		this.xScale = options.xScale;
 		this.yScale = options.yScale;
 		this.filters = this.model.get('filters');
+		this.model.on('change:show', this.render, this);
+		console.log("FILTERS");
+		console.log(this.model.get('filters'));
 		return this;
 	},
 

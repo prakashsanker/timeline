@@ -64,17 +64,73 @@ app.TimeChartView = Backbone.View.extend({
 			return this;
 	},
 
-	renderAxes: function(){
+	addDataLine: function(){
+		//never did this before looked at 
+		//http://bl.ocks.org/marufbd/7191340
+		//and customized(it was really hard to understand what was going on)
+		// var that = this;
+		// var lineModels = this.lineModels;
+		// this.hoverLine = this.svg.append("svg:line")
+		// 	.attr("class", "hover-line")
+		// 	.attr("x1", 20)
+		// 	.attr("x2",20)
+		// 	.attr("y1",2)
+		// 	.attr("y2", height + 20)
+		// 	.attr("transform", "translate(0,-20)")
+		// 	.attr("stroke-width",1)
+		// 	.attr("stroke","grey")
+		// 	.attr("opacity",1e-6);
+		// this.svg.on('mouseover', function (){
+		// 	var mouse = d3.mouse(this);
+		// 	var mouseX = mouse[0] - that.margin.left;
+		// 	var mouseY = mouse[1] - that.margin.top;
+		// 	if (mouseX > 0 && mouseY > 0 && mouseX < that.width){
+		// 		that.hoverLine.style("opacity",1);
+		// 	else {
+		// 		that.hoverLine.style("opacity",1e-6);
+		// 	}
+		// }});
+
+		// this.svg.on("mouseout", function(){
+		// 	that.hoverLine.style("opacity", 1e-6);
+		// });
+
+		// this.svg.on("mousemove", function(){
+		// 	var mouse = d3.mouse(this);
+		// 	var mouseX = mouse[0] - that.margin.left;
+		// 	var mouseY = mouse[1] - that.margin.top;
+		// 	that.hoverLine.attr("x1", mouseX).attr("x2",mouseX);
+		// 	if(mouseX > 0 && mouseY > 0 && mouseX < that.width){
+		// 		var dt = that.xScale.invert(mouseX);
+		// 		_.each(lineModels, function(lineModel, lineModelKey, lineModels){
+		// 			var filteredData = lineModel.get('filteredData');
+
+
+		// 		});
+
+		// 		/*
+		// 		The WAY THIS FUNCTION SHOULD WORK-
+		// 			Go through the data that is currently displayed, find the nearest date value
+		// 			and present that. 
+
+		// 			Problem here - how to access the data that is currently being shown? 
+		// 		*/
+
+		// 		var nearestDateVal = min
+
+
+		// 	}
+
+		// });
 
 
 
 	},
 
 	render: function(){
-		console.log("RENDER CHANGE");
-		this.renderAxes();
+		// this.renderAxes();
 
-
+		this.lineModels = [];
     	var linesToShow = []
     	var lineChoicesCollection = this.model.get('lineChoicesCollection');
     	var datumChoicesCollection = this.model.get('datumChoicesCollection');
@@ -115,6 +171,8 @@ app.TimeChartView = Backbone.View.extend({
 
     		});
     	});       
+
+    	this.addDataLine();
 
 		return this;
 

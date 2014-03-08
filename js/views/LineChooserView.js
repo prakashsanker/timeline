@@ -32,7 +32,7 @@ app.LineChooserView = Backbone.View.extend({
 		_.each(linesToAdd, function(value, key, list){
 			linesToShow.push($(value).data('line-title'));
 		});
-		this.model.set('linesToShow', linesToShow, {silent: true});
+		this.model.set('linesToShow', linesToShow);
 		this.model.set('filters', this.filters);
 	},
 
