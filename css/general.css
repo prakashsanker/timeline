@@ -1,7 +1,7 @@
 html,body {
 	height: 100%;
 }
-.tooltip {
+/*.tooltip {
 	position: absolute;
 	text-align: center;
 	width: 50px;
@@ -11,7 +11,7 @@ html,body {
 	border: 0px;
 	border-radius: 8px;
 	pointer-events: none;
-}
+}*/
 
 .timechart {
 	display: inline-block;
