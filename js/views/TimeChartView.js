@@ -65,9 +65,9 @@ app.TimeChartView = Backbone.View.extend({
 	},
 
 	addDataLine: function(){
-		//never did this before looked at 
-		//http://bl.ocks.org/marufbd/7191340
-		//and customized(it was really hard to understand what was going on)
+		// never did this before looked at 
+		// http://bl.ocks.org/marufbd/7191340
+		// and customized(it was really hard to understand what was going on)
 		// var that = this;
 		// var lineModels = this.lineModels;
 		// this.hoverLine = this.svg.append("svg:line")
@@ -114,14 +114,15 @@ app.TimeChartView = Backbone.View.extend({
 		// 			and present that. 
 
 		// 			Problem here - how to access the data that is currently being shown? 
+		// 			//the data being currently shown is the data that 
 		// 		*/
 
 		// 		var nearestDateVal = min
 
 
-		// 	}
+		// // 	}
 
-		// });
+		// // });
 
 
 
@@ -156,15 +157,17 @@ app.TimeChartView = Backbone.View.extend({
 
 		d3.selectAll('.line').remove();
 		d3.selectAll('.point').remove(); 
+		var idCounter = 0;
 
     	_(linesToShow).each(function(value,lineKey,lineList){
     		_(dataToShow).each(function(datumToShow, datumKey, datumList){
     			_(dataToDisplay).each(function(toDisplay, rowKey, rowList){
     				_(filtersObjects).each(function(filters, filterKey, filtersList){
 	   					var filters = filters[value];
-		    			var newTimeLine = new app.LineModel({lineTitle: value, title: toDisplay[1], value: datumToShow, data: toDisplay[0], show: true, filters: filters});
+		    			var newTimeLine = new app.LineModel({lineTitle: value, title: toDisplay[1], value: datumToShow, data: toDisplay[0], show: true, filters: filters, id: idCounter});
 		    			var newTimeLineView = new app.LineView({model: newTimeLine, svg: svg, xScale: xScale, yScale: yScale});
 		    			$(el).append(newTimeLineView.render().$el);
+		    			idCounter++;
     				});
  
     			});
