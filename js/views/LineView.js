@@ -118,6 +118,29 @@ app.LineView = Backbone.View.extend({
 				date = new Date(date[2], date[0], date[1]);
 				var yVal = yScale(d[model.get('lineTitle')])
 
+				var indicatorCircle = svg.append("circle")
+					.attr('cx', function(x){
+						var date = d["date"].match(/(\d+)/g);
+						date = new Date(date[2], date[0], date[1]);
+						return xScale(date);
+					})
+					.attr("cy", function(x){
+						var yVal = yScale(d[model.get('lineTitle')]);
+						return yVal;
+					})
+					.attr("r", 0)
+					.attr("fill", "none")
+					.style("stroke", "#d26b5f")
+					.attr("class", "indicatorCircle");
+
+				indicatorCircle
+					.transition()
+					.duration(2000)
+					.attr('r', 20)
+					.style('stroke',"#d26b5f" );
+
+
+
 				var yIndicatorLine = d3.svg.line()
 					.interpolate("linear")
 					.x(function(d,i){
@@ -140,12 +163,13 @@ app.LineView = Backbone.View.extend({
 				var yIndicatorLength = yIndicatorPath.node().getTotalLength();
 
 				yIndicatorPath
-			      .attr("stroke-dasharray", yIndicatorLength + " " + yIndicatorLength)
+			      .attr("stroke-dasharray", yIndicatorLength+ " " + yIndicatorLength)
 			      .attr("stroke-dashoffset", yIndicatorLength)
 			      .transition()
 			        .duration(2000)
 			        .ease("linear")
-			        .attr("stroke-dashoffset", 0);
+			        .attr("stroke-dashoffset", 0)
+			        .delay(2000);
 
 				var xIndicatorLine = d3.svg.line()
 					.interpolate("linear")
@@ -153,7 +177,7 @@ app.LineView = Backbone.View.extend({
 						if ( i == 0){
 							return xScale(date);
 						} else {
-							return xScale(minXScaleVal);
+							return minXScaleVal;
 						}
 					})
 					.y(function(d,i){
@@ -175,7 +199,8 @@ app.LineView = Backbone.View.extend({
 			      .transition()
 			        .duration(2000)
 			        .ease("linear")
-			        .attr("stroke-dashoffset", 0);
+			        .attr("stroke-dashoffset", 0)
+			        .delay(2000);
 
 
 
@@ -184,6 +209,8 @@ app.LineView = Backbone.View.extend({
 				svg.selectAll(".yIndicatorLine")
 				.remove();
 				svg.selectAll(".xIndicatorLine")
+				.remove();
+				svg.selectAll(".indicatorCircle")
 				.remove();
 
 			})
