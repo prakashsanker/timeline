@@ -123,8 +123,11 @@ app.LineView = Backbone.View.extend({
 				tooltipDiv.html(
 					"<div class='tooltip-val'>" + d[model.get('lineTitle')] + "</div>" + "<div class='tooltip-date'>" + date + "</div>"
 				)
-				.style("left", (d3.event.pageX) + "px")     
-                .style("top", (d3.event.pageY - 28) + "px");    
+				.style("left", d3.event.pageX)     
+                .style("top", d3.event.pageY); 
+
+                console.log("EFT");
+                console.log(d3.event.pageX);   
 
 				var date = d["date"].match(/(\d+)/g);
 				date = new Date(date[2], date[0], date[1]);
@@ -225,8 +228,7 @@ app.LineView = Backbone.View.extend({
 				.remove();
 				svg.selectAll(".indicatorCircle")
 				.remove();
-				d3.selectAll(".tooltip")
-				.style('opacity', 0);
+
 
 			})
 		this.svg.selectAll("internalPoints" + this.model.get("id"))
