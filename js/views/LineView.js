@@ -231,6 +231,7 @@ app.LineView = Backbone.View.extend({
 
 
 			})
+			.attr("class", "point");
 		this.svg.selectAll("internalPoints" + this.model.get("id"))
 			.data(this.filteredData)
 			.enter()
@@ -247,7 +248,8 @@ app.LineView = Backbone.View.extend({
 			})
 			.attr("r", 3)
 			.attr("fill","white")
-			.attr("stroke", "red");
+			.attr("stroke", "red")
+			.attr("class", "point");
 
 
 
@@ -309,7 +311,8 @@ app.LineView = Backbone.View.extend({
 					var colorIndex = Math.floor(Math.random() * (10 - 0) + 0);
 					return color(colorIndex); })
 				.attr("fill","none")
-				.attr("class","line" + this.model.get("id"));
+				.attr("class","line" + this.model.get("id"))
+				.attr("class", "line");
 
 
 
