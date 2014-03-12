@@ -157,6 +157,7 @@ app.TimeChartView = Backbone.View.extend({
 
 		d3.selectAll('.line').remove();
 		d3.selectAll('.point').remove(); 
+		d3.selectAll('.line-label').remove();
 		var idCounter = 0;
 
     	_(linesToShow).each(function(value,lineKey,lineList){

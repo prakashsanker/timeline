@@ -328,14 +328,16 @@ app.LineView = Backbone.View.extend({
 		        .attr("stroke-dashoffset", 0);
 
 
-		    this.svg.append("text")
-		    	.attr("x", maxXScaleVal - 50)
-		    	.attr("y", maxYScaleVal)
-		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');});
 
 		    //data points and tool tips
 
 		    this.addDataPoints(minXScaleVal);
+		    this.svg.append("text")
+		    	.attr("x", maxXScaleVal - 50)
+		    	.attr("y", maxYScaleVal  - 30)
+		    	.text(function(d){ return model.get('value') + "-" + model.get('lineTitle');})
+		    	.attr("class","line-label");
+
 
 	    } else {
 
