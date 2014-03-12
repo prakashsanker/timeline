@@ -36,10 +36,10 @@ app.ValuesTableView = Backbone.View.extend({
 	},
 
 	addDatumToShow: function(e){
-		var test = $(this.$el).find(".datum-list").find(":checked");
+		var checkedValues = $(this.$el).find(".datum-list").find(":checked");
 
 		var newDataToShow = [];
-		_.each(test, function(value,key,list){
+		_.each(checkedValues, function(value,key,list){
 			var title = $(value).data("title");
 			newDataToShow.push(title);
 		});
