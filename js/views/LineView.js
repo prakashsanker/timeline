@@ -81,9 +81,6 @@ app.LineView = Backbone.View.extend({
 			newData = temporaryFilteredData;
 		});
 
-
-		// console.log("NEW DATA");
-		// console.log(newData);
 		return newData; 
 	},
 
@@ -92,10 +89,9 @@ app.LineView = Backbone.View.extend({
 		var yScale = this.yScale;
 		var model = this.model;
 		var svg = this.svg;
-		var tooltipDiv = d3.select('body').append('div').attr('class', 'tooltip').style('opacity', 0);
+		var filteredData = this.filteredData;
 
-			   	
-		this.svg.selectAll("internalPoints" + this.model.get("id"))
+		var internalPoints = this.svg.selectAll("internalPoints" + this.model.get("id"))
 			.data(this.filteredData)
 			.enter()
 			.append("circle")
@@ -116,19 +112,6 @@ app.LineView = Backbone.View.extend({
 				var date = d["date"].match(/(\d+)/g);
 				date = new Date(date[2], date[0], date[1]);
 
-
-				tooltipDiv.transition()
-					.duration(200)
-					.style("opacity",0.9);
-				tooltipDiv.html(
-					"<div class='tooltip-val'>" + d[model.get('lineTitle')] + "</div>" + "<div class='tooltip-date'>" + date + "</div>"
-				)
-				.style("left", d3.event.pageX)     
-                .style("top", d3.event.pageY); 
-
-                console.log("EFT");
-                console.log(d3.event.pageX);   
-
 				var date = d["date"].match(/(\d+)/g);
 				date = new Date(date[2], date[0], date[1]);
 				var yVal = yScale(d[model.get('lineTitle')])
@@ -147,6 +130,25 @@ app.LineView = Backbone.View.extend({
 					.attr("fill", "none")
 					.style("stroke", "#d26b5f")
 					.attr("class", "indicatorCircle");
+
+
+
+				svg.append("text")
+					.text(function(x){
+						return d[model.get('title')];
+					})
+					.attr("x", d3.event.pageX - 20)
+					.attr("y", d3.event.pageY - 20)
+					.attr("class", "tooltip");
+
+
+				svg.append("text")					
+					.text(function(x){
+						return d['date'];
+					})
+					.attr("x", d3.event.pageX - 20)
+					.attr("y", d3.event.pageY)
+					.attr("class", "tooltip")
 
 				indicatorCircle
 					.transition()
@@ -228,11 +230,14 @@ app.LineView = Backbone.View.extend({
 				.remove();
 				svg.selectAll(".indicatorCircle")
 				.remove();
+				svg.selectAll(".tooltip")
+				.remove();
 
 
 			})
 			.attr("class", "point");
-		this.svg.selectAll("internalPoints" + this.model.get("id"))
+
+		var internalPoints = this.svg.selectAll("internalPoints" + this.model.get("id"))
 			.data(this.filteredData)
 			.enter()
 			.append("circle")
@@ -250,7 +255,6 @@ app.LineView = Backbone.View.extend({
 			.attr("fill","white")
 			.attr("stroke", "red")
 			.attr("class", "point");
-
 
 
 

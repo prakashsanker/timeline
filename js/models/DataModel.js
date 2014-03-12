@@ -4,6 +4,4 @@ app.DataModel = Backbone.Model.extend({
 	defaults :{
 		title: ''
 	}
-
-
 });
